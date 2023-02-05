@@ -1,13 +1,17 @@
-import LagTask from './Task'
+import Task from './Task.vue'
+
 import { action } from '@storybook/addon-actions'
+
 export default {
-  component: LagTask,
+  component: Task,
+  //👇 Our exports that end in "Data" are not stories.
+  excludeStories: /.*Data$/,
   title: 'Example/Task',
+  //👇 Our events will be mapped in Storybook UI
   argTypes: {
     onPinTask: {},
     onArchiveTask: {},
   },
-  excludeStories: /.*Data$/,
 }
 
 export const actionsData = {
@@ -16,34 +20,33 @@ export const actionsData = {
 }
 
 const Template = (args) => ({
-  components: {
-    LagTask,
-  },
-  template: '<LagTask v-bind="args"/>',
+  components: { Task },
   setup() {
     return { args, ...actionsData }
   },
+  template: '<Task v-bind="args" />',
 })
-
 export const Default = Template.bind({})
 Default.args = {
   task: {
     id: '1',
-    title: 'Test task',
-    state: 'TASK-INBOX',
+    title: 'Test Task',
+    state: 'TASK_INBOX',
   },
 }
+
 export const Pinned = Template.bind({})
 Pinned.args = {
   task: {
     ...Default.args.task,
-    state: 'TASK-PINNED',
+    state: 'TASK_PINNED',
   },
 }
+
 export const Archived = Template.bind({})
 Archived.args = {
   task: {
     ...Default.args.task,
-    state: 'TASK-ARCHIVED',
+    state: 'TASK_ARCHIVED',
   },
 }
